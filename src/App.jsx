@@ -7,7 +7,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true, data: {
+      loading: true,
+      data: {
         currentUser: { name: "Bob" },
         messages: [
           {
@@ -23,26 +24,37 @@ class App extends Component {
         ]
       }
     };
+    this.addNewChat = this.addNewChat.bind(this);
   }
 
-  componentWillMount() {
-    setTimeout(() => {
-      this.setState({ loading: false })
-    }, 3000);
+  addNewChat(chat) {
+    const newChats = {id: 5, username: this.state.data.currentUser.name, content: chat};
+    const messages = this.state.data.messages.concat(newChats)
+    let data = {...this.state.data};
+    data.messages = messages;
+    this.setState({ data })
   }
+
+  // componentWillMount() {
+  //   console.log("componentDidMount <App />");
+  //   setTimeout(() => {
+  //     console.log("Simulating incoming message");
+  //     const newMessage = { id: 3, username: "Michelle", content: "Hello there!" };
+  //     const messages = this.state.data.messages.concat(newMessage)
+  //     let data = {...this.state.data};
+  //     data.messages = messages;
+  //     this.setState({ data })
+  //   }, 3000);
+  // }
 
   render() {
-    if (this.state.loading) {
-      return (<h1> Please wait while Chatty App is loading...</h1>)
-    } else {
       return (<div>
         <NavBar />,
       <MessageList messages={this.state.data.messages} />,
-      <ChatBar currentUser={this.state.data.currentUser.name} />
+      <ChatBar currentUser={this.state.data.currentUser.name} addNewChat={this.addNewChat}/>
       </div>
       )
     }
   }
-}
 
 export default App;
