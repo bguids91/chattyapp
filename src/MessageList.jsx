@@ -10,6 +10,7 @@ class MessageList extends Component {
     const messages = this.props.messages.map(mes => (
       <Message key={mes.id} username={mes.username} content={mes.content} />
     ));
+    console.log("ML.render", messages);
     return(
     <main className="messages">
       {messages}
