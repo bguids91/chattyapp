@@ -3,6 +3,8 @@ import NavBar from './NavBar.jsx';
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
 
+let exampleSocket = new WebSocket("ws://0.0.0.0:3001/");
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -32,20 +34,16 @@ class App extends Component {
     const messages = this.state.data.messages.concat(newChats)
     let data = {...this.state.data};
     data.messages = messages;
+    exampleSocket.send(JSON.stringify(newChats.content))
     this.setState({ data })
   }
 
-  // componentWillMount() {
-  //   console.log("componentDidMount <App />");
-  //   setTimeout(() => {
-  //     console.log("Simulating incoming message");
-  //     const newMessage = { id: 3, username: "Michelle", content: "Hello there!" };
-  //     const messages = this.state.data.messages.concat(newMessage)
-  //     let data = {...this.state.data};
-  //     data.messages = messages;
-  //     this.setState({ data })
-  //   }, 3000);
-  // }
+  componentWillMount() {
+    console.log("componentDidMount <App />");
+    exampleSocket.onopen = function (event) {
+      console.log("Connection made to server");
+    };
+  }
 
   render() {
       return (<div>

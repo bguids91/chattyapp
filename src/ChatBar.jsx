@@ -11,13 +11,15 @@ class ChatBar extends Component {
         this.props.addNewChat(chatContentInput.value);
         chatContentInput.value = '';
     }
-    return (<footer className="chatbar">
+    return (
       <form onSubmit={onSubmit}>
+      <footer className="chatbar">
         <input className="chatbar-username" type="text" defaultValue={this.props.currentUser} />
         <input className="chatbar-message" name="contentInput" type="text" placeholder="Type a message and hit ENTER" />
         <input type="submit" id="hidden-button" />
+        </footer>
       </form>
-    </footer>)
+    )
   }
 }
 
