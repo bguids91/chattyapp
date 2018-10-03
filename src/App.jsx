@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NavBar from './NavBar.jsx';
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
+const uuidv1 = require('uuid/v1');
 
 let exampleSocket = new WebSocket("ws://0.0.0.0:3001/");
 
@@ -30,11 +31,11 @@ class App extends Component {
   }
 
   addNewChat(chat) {
-    const newChats = {id: 5, username: this.state.data.currentUser.name, content: chat};
+    const newChats = { id: uuidv1(), username: this.state.data.currentUser.name, content: chat };
     const messages = this.state.data.messages.concat(newChats)
-    let data = {...this.state.data};
+    let data = { ...this.state.data };
     data.messages = messages;
-    exampleSocket.send(JSON.stringify(newChats.content))
+    exampleSocket.send(JSON.stringify(newChats));
     this.setState({ data })
   }
 
@@ -46,13 +47,13 @@ class App extends Component {
   }
 
   render() {
-      return (<div>
-        <NavBar />,
+    return (<div>
+      <NavBar />,
       <MessageList messages={this.state.data.messages} />,
-      <ChatBar currentUser={this.state.data.currentUser.name} addNewChat={this.addNewChat}/>
-      </div>
-      )
-    }
+      <ChatBar currentUser={this.state.data.currentUser.name} addNewChat={this.addNewChat} />
+    </div>
+    )
   }
+}
 
 export default App;
