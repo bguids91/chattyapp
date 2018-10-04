@@ -10,12 +10,13 @@ class MessageList extends Component {
     const messages = this.props.messages.map(mes => (
       <Message key={mes.id} username={mes.username} content={mes.content} />
     ));
-    console.log("ML.render", messages);
+    const notification = this.props.notification
     return(
     <main className="messages">
+        <div className="message system">
+          {notification}
+        </div>
       {messages}
-      <div className="message system">
-      </div>
     </main>)
   }
 }

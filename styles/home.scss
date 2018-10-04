@@ -13,7 +13,6 @@ body {
   background: tomato;
   border-top: 1px solid black;
   bottom: 0;
-  display: flex;
   left: 0;
   padding: 5px;
   position: fixed;
@@ -31,11 +30,9 @@ body {
 }
 
 .chatbar-message {
-  flex: 8;
 }
 
 .chatbar-username {
-  flex: 2;
 }
 
 .message {
@@ -89,4 +86,12 @@ body {
 
 #hidden-button {
   display: none;
+}
+
+input {
+  width: 100% !important;
+}
+
+.container {
+  margin: 0;
 }
