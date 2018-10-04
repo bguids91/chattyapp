@@ -12,7 +12,7 @@ class NavBar extends Component {
       <br></br>
       <img src="./images/pacman (1).png" /><span>-----</span><img src="./images/pacman (2).png" />
       <h6 id="connected-users"> Connected users: {connected} </h6>
-      </div>)
+    </div>)
   }
 }
 export default NavBar;

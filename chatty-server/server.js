@@ -15,7 +15,9 @@ const server = express()
   .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${PORT}`));
 
 // Create the WebSockets server
-const wss = new SocketServer({ server });
+const wss = new SocketServer({
+  server
+});
 
 // Broadcast to all.
 wss.broadcast = function broadcast(data) {
@@ -28,7 +30,10 @@ wss.broadcast = function broadcast(data) {
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
-  let connectedClients = ({ type: "connectedClients", number: wss.clients.size })
+  let connectedClients = ({
+    type: "connectedClients",
+    number: wss.clients.size
+  })
   wss.broadcast(JSON.stringify(connectedClients));
 
   ws.on('message', function incoming(data) {
@@ -49,20 +54,16 @@ wss.on('connection', (ws) => {
           content: incomingData.content
         }
         break;
-      }
-      wss.broadcast(JSON.stringify(incomingData))
+    }
+    wss.broadcast(JSON.stringify(incomingData))
   });
 
   ws.on('close', () => {
     console.log('Client disconnected')
-    let disconnectedClients = ({type: "disconnectedClients", number: wss.clients.size })
+    let disconnectedClients = ({
+      type: "disconnectedClients",
+      number: wss.clients.size
+    })
     wss.broadcast(JSON.stringify(disconnectedClients));
   });
 });
-
-
-      // wss.clients.forEach(function each(client) {
-      //   if (client.readyState === socket.OPEN) {
-      //     client.send(JSON.stringify(newUser));
-      //   }
-      // })

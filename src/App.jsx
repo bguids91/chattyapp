@@ -12,7 +12,7 @@ class App extends Component {
       data: {
         currentUser: { name: 'Anonymous' },
         messages: [],
-        notification: {content: ''},
+        notification: { content: '' },
         connectedClients: { number: 0 }
       }
     };
@@ -26,7 +26,7 @@ class App extends Component {
   }
 
   addNewUsername(username) {
-    const newUser = { type: "postNotification", content: `${this.state.data.currentUser.name} has changed their name to ${username}`}
+    const newUser = { type: "postNotification", content: `${this.state.data.currentUser.name} has changed their name to ${username}` }
     this.exampleSocket.send(JSON.stringify(newUser))
     let data = { ...this.state.data };
     data.currentUser.name = username;
@@ -41,19 +41,19 @@ class App extends Component {
     this.exampleSocket.onmessage = (event) => {
       let newData = JSON.parse(event.data);
       console.log(newData);
-      switch(newData.type) {
+      switch (newData.type) {
         case "incomingMessage":
           const messages = this.state.data.messages.concat(newData)
           let data = { ...this.state.data };
           data.messages = messages;
           this.setState({ data })
-        break;
+          break;
         case "incomingNotification":
           const notification = newData.content
           let object = { ...this.state.data };
           object.notification.content = notification;
           this.setState({ object })
-        break;
+          break;
         case "connectedClients":
           const connected = newData.number;
           console.log(connected);
@@ -61,14 +61,14 @@ class App extends Component {
           connect.connectedClients.number = connected;
           console.log(connect)
           this.setState({ connect })
-        break;
+          break;
         case "disconnectedClients":
           const disconnected = newData.number;
           let disconnect = { ...this.state.data };
           disconnect.connectedClients.number = disconnected;
           console.log(disconnect)
           this.setState({ disconnect })
-        break;
+          break;
         default:
           throw new Error("Unknown event type " + data.type);
       }
@@ -78,17 +78,17 @@ class App extends Component {
 
   render() {
     return (
-    <div className="row">
-    <div className="col" id="sidebar">
-      <NavBar connectedUsers={this.state.data.connectedClients.number} />
-    </div>
-    <div className="col" id="main-content">
-      <MessageList messages={this.state.data.messages} notification={this.state.data.notification.content} />
-    <footer className="chatbar">
-      <ChatBar currentUser={this.state.data.currentUser.name} addNewChat={this.addNewChat} addNewUsername={this.addNewUsername}/>
-    </footer>
-    </div>
-   </div>
+      <div className="row">
+        <div className="col" id="sidebar">
+          <NavBar connectedUsers={this.state.data.connectedClients.number} />
+        </div>
+        <div className="col" id="main-content">
+          <MessageList messages={this.state.data.messages} notification={this.state.data.notification.content} />
+          <footer className="chatbar">
+            <ChatBar currentUser={this.state.data.currentUser.name} addNewChat={this.addNewChat} addNewUsername={this.addNewUsername} />
+          </footer>
+        </div>
+      </div>
     )
   }
 }

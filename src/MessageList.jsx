@@ -6,18 +6,18 @@ class MessageList extends Component {
     super(props);
   };
 
-  render () {
+  render() {
     const messages = this.props.messages.map(mes => (
       <Message key={mes.id} username={mes.username} content={mes.content} />
     ));
     const notification = this.props.notification
-    return(
-    <main className="messages">
+    return (
+      <main className="messages">
         <div className="message system">
           {notification}
         </div>
-      {messages}
-    </main>)
+        {messages}
+      </main>)
   }
 }
 
