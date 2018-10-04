@@ -15,51 +15,56 @@ const server = express()
   .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${PORT}`));
 
 // Create the WebSockets server
-const wss = new SocketServer({
-  server
-});
+const wss = new SocketServer({ server });
 
+// Broadcast to all.
+wss.broadcast = function broadcast(data) {
+  wss.clients.forEach(function each(client) {
+    if (client.readyState === socket.OPEN) {
+      client.send(data);
+    }
+  });
+};
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
   let connectedClients = ({ type: "connectedClients", number: wss.clients.size })
   console.log(connectedClients);
-  ws.send(JSON.stringify(connectedClients));
+  wss.broadcast(JSON.stringify(connectedClients));
 
   ws.on('message', function incoming(data) {
     console.log(JSON.parse(data));
     let incomingData = JSON.parse(data);
     switch (incomingData.type) {
       case "postMessage":
-        newMessage = {
+        incomingData = {
           type: "incomingMessage",
           id: uuidv1(),
           username: incomingData.username,
           content: incomingData.content
         }
-      wss.clients.forEach(function each(client) {
-        if (client.readyState === socket.OPEN) {
-          client.send(JSON.stringify(newMessage));
-        }
-      })
         break;
       case "postNotification":
-        newUser = {
+        incomingData = {
           type: "incomingNotification",
           content: incomingData.content
         }
-      wss.clients.forEach(function each(client) {
-        if (client.readyState === socket.OPEN) {
-          client.send(JSON.stringify(newUser));
-        }
-      })
         break;
       }
+      wss.broadcast(JSON.stringify(incomingData))
   });
+
   ws.on('close', () => {
     console.log('Client disconnected')
     let disconnectedClients = ({type: "disconnectedClients", number: wss.clients.size })
     console.log(disconnectedClients);
-    ws.send(JSON.stringify(disconnectedClients));
+    wss.broadcast(JSON.stringify(disconnectedClients));
   });
 });
+
+
+      // wss.clients.forEach(function each(client) {
+      //   if (client.readyState === socket.OPEN) {
+      //     client.send(JSON.stringify(newUser));
+      //   }
+      // })

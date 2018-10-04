@@ -13,7 +13,7 @@ class App extends Component {
         currentUser: { name: 'Anonymous' },
         messages: [],
         notification: {content: ''},
-        connectedClients: '',
+        connectedClients: { number: 0 }
       }
     };
     this.addNewChat = this.addNewChat.bind(this);
@@ -34,13 +34,14 @@ class App extends Component {
     this.setState({ data });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     console.log("componentDidMount <App />");
     this.exampleSocket.onopen = function (event) {
       console.log("Connection made to server");
     };
     this.exampleSocket.onmessage = (event) => {
       let newData = JSON.parse(event.data);
+      console.log(newData);
       switch(newData.type) {
         case "incomingMessage":
           const messages = this.state.data.messages.concat(newData)
@@ -58,14 +59,15 @@ class App extends Component {
           const connected = newData.number;
           console.log(connected);
           let connect = { ...this.state.data };
-          connect.connectedClients = connected;
+          connect.connectedClients.number = connected;
           console.log(connect)
           this.setState({ connect })
         break;
         case "disconnectedClients":
           const disconnected = newData.number;
           let disconnect = { ...this.state.data };
-          disconnect.connectedClients = disconnected;
+          disconnect.connectedClients.number = disconnected;
+          console.log(disconnect)
           this.setState({ disconnect })
         break;
         default:
@@ -77,7 +79,7 @@ class App extends Component {
 
   render() {
     return (<div>
-      <NavBar connectedUsers={this.state.data.connectedClients} />,
+      <NavBar connectedUsers={this.state.data.connectedClients.number} />,
       <MessageList messages={this.state.data.messages} notification={this.state.data.notification.content} />,
       <ChatBar currentUser={this.state.data.currentUser.name} addNewChat={this.addNewChat} addNewUsername={this.addNewUsername}/>
     </div>
