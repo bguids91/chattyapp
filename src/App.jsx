@@ -30,7 +30,6 @@ class App extends Component {
     this.exampleSocket.send(JSON.stringify(newUser))
     let data = { ...this.state.data };
     data.currentUser.name = username;
-    console.log(data);
     this.setState({ data });
   }
 
@@ -78,11 +77,18 @@ class App extends Component {
 
 
   render() {
-    return (<div>
-      <NavBar connectedUsers={this.state.data.connectedClients.number} />,
-      <MessageList messages={this.state.data.messages} notification={this.state.data.notification.content} />,
-      <ChatBar currentUser={this.state.data.currentUser.name} addNewChat={this.addNewChat} addNewUsername={this.addNewUsername}/>
+    return (
+    <div className="row">
+    <div className="col" id="sidebar">
+      <NavBar connectedUsers={this.state.data.connectedClients.number} />
     </div>
+    <div className="col" id="main-content">
+      <MessageList messages={this.state.data.messages} notification={this.state.data.notification.content} />
+    <footer className="chatbar">
+      <ChatBar currentUser={this.state.data.currentUser.name} addNewChat={this.addNewChat} addNewUsername={this.addNewUsername}/>
+    </footer>
+    </div>
+   </div>
     )
   }
 }

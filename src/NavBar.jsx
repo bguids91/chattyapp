@@ -7,10 +7,12 @@ class NavBar extends Component {
   render() {
     const connected = this.props.connectedUsers;
     console.log(connected);
-    return (<nav className="navbar">
-      <a href="/" className="navbar-brand">Chatty</a>
-      <h4>Connected users: {connected} </h4>
-    </nav>)
+    return (<div className="sidebar-content text-center">
+      <h2 id="logo">Welcome to <b>Chatty</b></h2>
+      <br></br>
+      <img src="./images/pacman (1).png" /><span>-----</span><img src="./images/pacman (2).png" />
+      <h6 id="connected-users"> Connected users: {connected} </h6>
+      </div>)
   }
 }
 export default NavBar;
