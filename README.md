@@ -5,6 +5,10 @@ A real-time chat web application that is primarily a client-side SPA (single-pag
 Contains a chat log displaying messages and notifications as well as an input field to change your name and an input field to send a message. The client-side app communicates with a server via WebSockets for multi-user real-time updates.
 No persistent database is involved; the focus is on the client-side experience.
 
+### Screenshots
+
+!["Screenshot of Chatty App"](https://github.com/bguids91/chattyapp/blob/master/docs/Screen%20Shot%202018-10-04%20at%2017.16.36.png?raw=true)
+
 ### Dependencies
 
 **Client Side** 
