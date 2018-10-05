@@ -10,7 +10,8 @@ class MessageList extends Component {
     const messages = this.props.messages.map(mes => (
       <Message key={mes.id} username={mes.username} content={mes.content} />
     ));
-    const notification = this.props.notification
+
+    const notification = <h6>NOTIFICATIONS: {this.props.notification}</h6>
     return (
       <main className="messages">
         <div className="message system">

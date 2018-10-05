@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NavBar from './NavBar.jsx';
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
+import { StringDecoder } from 'string_decoder';
 
 class App extends Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class App extends Component {
       console.log(newData);
       switch (newData.type) {
         case "incomingMessage":
+          console.log("Client side, we are in post")
           const messages = this.state.data.messages.concat(newData)
           let data = { ...this.state.data };
           data.messages = messages;
@@ -69,8 +71,8 @@ class App extends Component {
           console.log(disconnect)
           this.setState({ disconnect })
           break;
-        default:
-          throw new Error("Unknown event type " + data.type);
+        // default:
+        //   throw new Error("Unknown event type " + data.type);
       }
     }
   }
