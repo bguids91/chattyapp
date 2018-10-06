@@ -7,7 +7,7 @@ No persistent database is involved; the focus is on the client-side experience.
 
 ### Screenshots
 
-!["Screenshot of Chatty App"](https://github.com/bguids91/chattyapp/blob/master/docs/Screen%20Shot%202018-10-04%20at%2017.16.36.png?raw=true)
+!["Screenshot of Chatty App"](https://github.com/bguids91/chattyapp/blob/master/docs/Screen%20Shot%202018-10-06%20at%2014.06.13.png?raw=true)
 
 ### Dependencies
 
