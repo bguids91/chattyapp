@@ -44,7 +44,6 @@ class App extends Component {
       console.log(newData);
       switch (newData.type) {
         case "incomingMessage":
-          console.log("Client side, we are in post")
           const messages = this.state.data.messages.concat(newData)
           let data = { ...this.state.data };
           data.messages = messages;
